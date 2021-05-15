@@ -16,15 +16,48 @@ import kotlin.math.sin
 
 class OclockView(context: Context?, attrs: AttributeSet?)
     : View(context, attrs) {
+
+    companion object {
+        private const val DEFAULT_HANDHOUR_COLOR = Color.RED
+        private const val DEFAULT_HANDMIN_COLOR = Color.BLUE
+        private const val DEFAULT_HANDSEC_COLOR = Color.BLACK
+        private const val DEFAULT_HANDHOUR_SIZE = 15f
+        private const val DEFAULT_HANDMIN_SIZE = 22f
+        private const val DEFAULT_HANDSEC_SIZE = 30f
+    }
     private var h: Int = 0
     private var w: Int = 0
+    private var handhourColor = DEFAULT_HANDHOUR_COLOR
+    private var handminColor = DEFAULT_HANDMIN_COLOR
+    private var handsecColor = DEFAULT_HANDSEC_COLOR
+    private var handhourSize = DEFAULT_HANDHOUR_SIZE
+    private var handminSize = DEFAULT_HANDMIN_SIZE
+    private var handsecSize = DEFAULT_HANDSEC_SIZE
     private var padding: Int = 0
     private var handTruncation = 0
     private var hourTrancation = 0
     private var radius = 0
-    private lateinit var paint: Paint
+    private  val paint = Paint()
     private var isInit = false
     private val rect: Rect = Rect()
+
+    init {
+        paint.isAntiAlias = true
+        setupAttributes(attrs)
+    }
+
+    private fun setupAttributes(attrs: AttributeSet?){
+        val typedArray = context.theme.obtainStyledAttributes(attrs, R.styleable.OclockView,
+                0, 0)
+        handhourColor = typedArray.getColor(R.styleable.OclockView_handHourColor, DEFAULT_HANDHOUR_COLOR)
+        handminColor = typedArray.getColor(R.styleable.OclockView_handMinColor, DEFAULT_HANDMIN_COLOR)
+        handsecColor = typedArray.getColor(R.styleable.OclockView_handSecColor, DEFAULT_HANDSEC_COLOR)
+        handhourSize = typedArray.getDimension(R.styleable.OclockView_handHourSize, DEFAULT_HANDHOUR_SIZE)
+        handminSize = typedArray.getDimension(R.styleable.OclockView_handMinSize, DEFAULT_HANDMIN_SIZE)
+        handsecSize = typedArray.getDimension(R.styleable.OclockView_handSecSize, DEFAULT_HANDSEC_SIZE)
+
+        typedArray.recycle()
+    }
 
     override fun onDraw(canvas: Canvas?) {
         super.onDraw(canvas)
@@ -47,8 +80,8 @@ class OclockView(context: Context?, attrs: AttributeSet?)
         val handRadius = radius - hourTrancation
         paint.reset()
         paint.apply {
-            color = resources.getColor(android.R.color.holo_blue_dark)
-            strokeWidth = 15f
+            color = handhourColor
+            strokeWidth = handhourSize
             style = Paint.Style.STROKE
             isAntiAlias = true
         }
@@ -65,8 +98,8 @@ class OclockView(context: Context?, attrs: AttributeSet?)
         val angle = Math.PI * loc / 30 - Math.PI / 2
         paint.reset()
         paint.apply {
-            color = resources.getColor(android.R.color.holo_red_dark)
-            strokeWidth = 22f
+            color = handminColor
+            strokeWidth = handminSize
             style = Paint.Style.STROKE
             isAntiAlias = true
         }
@@ -84,8 +117,8 @@ class OclockView(context: Context?, attrs: AttributeSet?)
         var angle = Math.PI * loc / 30 - Math.PI / 2
         paint.reset()
         paint.apply {
-            color = resources.getColor(android.R.color.black)
-            strokeWidth = 30f
+            color = handsecColor
+            strokeWidth = handsecSize
             style = Paint.Style.STROKE
             isAntiAlias = true
         }
@@ -144,7 +177,6 @@ class OclockView(context: Context?, attrs: AttributeSet?)
         radius = min / 2 - padding
         handTruncation = min / 20
         hourTrancation = min / 6
-        paint = Paint()
         isInit = true
     }
 }

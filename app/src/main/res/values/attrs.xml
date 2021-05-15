@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="OclockView">
+        <attr name="handHourColor" format="color" />
+        <attr name="handMinColor" format="color" />
+        <attr name="handSecColor" format="color" />
+        <attr name="handHourSize" format="dimension" />
+        <attr name="handMinSize" format="dimension" />
+        <attr name="handSecSize" format="dimension"/>
+    </declare-styleable>
+</resources>

@@ -8,9 +8,13 @@
     tools:context=".MainActivity">
 
     <com.example.customview.OclockView
+        android:id="@+id/oclock_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        app:layout_constraintEnd_toEndOf="parent"
+        app:handHourColor="@color/red"
+        app:handSecColor="@color/black"
+        app:handMinColor="@color/dark_blue"/>
 </androidx.constraintlayout.widget.ConstraintLayout>
